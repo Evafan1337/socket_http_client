@@ -7,17 +7,19 @@ import pytest
     ("http://www.airwar.ru/enc/fighter/mig21pf.html", True),
     ("http://example.com/", True),
 ])
-def test_set_url_correct(correct_url):
+def test_set_url_correct(correct_url,expected_result):
 
     handler = SocketHandler()
     handler.setUrl(correct_url)
 
-    assert handler.getUrl(correct_url) == correct_url
+    definition = handler.getUrl() == correct_url
+
+    assert definition == expected_result
     #assert "testSetEmpty" == "testSetEmpty"
 
 
 
-@pytest.mark.parametrize("incorrect_url", [
+@pytest.mark.parametrize("incorrect_url, expected_result", [
     ("", False),
     ("a", False),
     ("www.mp3#.com", False),
@@ -25,8 +27,14 @@ def test_set_url_correct(correct_url):
     ("www.foufos-.gr", False),
     ("www.mp3#.com", False),
 ])
-def test_set_url_incorrect(incorrect_url):
-    assert True
-    #assert "testSetInvalidUrl" == "testSetInvalidUrl"
+def test_set_url_incorrect(incorrect_url,expected_result):
+    try:
+        handler = SocketHandler()
+        handler.setUrl(incorrect_url)
+        definition = handler.getUrl() == incorrect_url
+        assert False
+    except Exception:
+        assert True
+
 
 

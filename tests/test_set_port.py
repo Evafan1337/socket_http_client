@@ -18,6 +18,7 @@ def test_set_port_correct(correct_port, expected_result):
     ("", False),
     (443, False),
     (-1000, False),
+    (355, False)
 ])
 def test_set_port_incorrect(incorrect_port, expected_result):
     try:
